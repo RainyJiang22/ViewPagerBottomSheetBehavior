@@ -5,6 +5,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
+import com.base.vpbs.CallBackScrollChild
 import com.base.vpbs.NumberAdapter
 import com.base.vpbs.base.BaseFragment
 import com.base.vpbs.base.EmptyViewModel
@@ -15,8 +16,10 @@ import com.base.vpbs.setData
  * @author jiangshiyu
  * @date 2022/5/2
  */
-class FirstFragment : BaseFragment<FragmentFirstBinding, EmptyViewModel>() {
+class FirstFragment : BaseFragment<FragmentFirstBinding, EmptyViewModel>(){
 
+
+    var callBackScrollChild: CallBackScrollChild? = null
 
     override fun onBundle(bundle: Bundle) {
 
@@ -28,6 +31,11 @@ class FirstFragment : BaseFragment<FragmentFirstBinding, EmptyViewModel>() {
             it.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             it.adapter = NumberAdapter(setData().toMutableList())
         }
+    }
+
+    override fun onVisible() {
+        super.onVisible()
+        binding?.rvFirst?.let { callBackScrollChild?.backScrollChild(it) }
     }
 
 

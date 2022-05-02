@@ -1,6 +1,7 @@
 package com.base.vpbs
 
 import android.os.Bundle
+import android.view.View
 import com.base.vpbs.base.BaseViewPagerSheetDialogFragment
 import com.base.vpbs.base.EmptyViewModel
 import com.base.vpbs.base.ScreenUtil
@@ -15,10 +16,21 @@ import com.google.android.material.tabs.TabLayout
  * @date 2022/5/2
  */
 class ContentSheetFragment :
-    BaseViewPagerSheetDialogFragment<FragmentContentBinding, EmptyViewModel>() {
+    BaseViewPagerSheetDialogFragment<FragmentContentBinding, EmptyViewModel>(),
+    CallBackScrollChild {
 
 
-    private val fragments by lazy { arrayOf(FirstFragment(), SecondFragment(), ThirdFragment()) }
+    private val fragments by lazy {
+        arrayOf(
+            FirstFragment().apply {
+                this.callBackScrollChild = this@ContentSheetFragment
+            }, SecondFragment().apply {
+                this.callBackScrollChild = this@ContentSheetFragment
+            }, ThirdFragment().apply {
+                this.callBackScrollChild = this@ContentSheetFragment
+            }
+        )
+    }
 
     override fun onBundle(bundle: Bundle) {
     }
@@ -31,6 +43,7 @@ class ContentSheetFragment :
 
         binding?.tabLayout?.getTabAt(0)?.select()
         replaceFragment(fragments[0], "first")
+
         binding?.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
@@ -56,5 +69,9 @@ class ContentSheetFragment :
 
         })
 
+    }
+
+    override fun backScrollChild(scrollChild: View) {
+        behavior?.invalidateScrollingChild(scrollChild)
     }
 }
