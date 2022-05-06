@@ -82,7 +82,7 @@ import java.util.Map;
  * bottom sheet.
  */
 @SuppressLint("RestrictedApi")
-public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behavior<V> {
+public class CustomBottomSheetBehavior<V extends View> extends CoordinatorLayout.Behavior<V> {
 
 
     /**
@@ -346,10 +346,10 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
 
     private int expandHalfwayActionId = View.NO_ID;
 
-    public BottomSheetBehavior() {
+    public CustomBottomSheetBehavior() {
     }
 
-    public BottomSheetBehavior(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public CustomBottomSheetBehavior(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         peekHeightGestureInsetBuffer =
@@ -545,7 +545,7 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
             ViewCompat.offsetTopAndBottom(child, savedTop - child.getTop());
         }
 
-        if (nestedScrollingChildRef != null) {
+        if (nestedScrollingChildRef == null) {
             nestedScrollingChildRef = new WeakReference<>(findScrollingChild(child));
         }
         return true;
@@ -1755,7 +1755,7 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
             skipCollapsed = source.readInt() == 1;
         }
 
-        public SavedState(Parcelable superState, @NonNull BottomSheetBehavior<?> behavior) {
+        public SavedState(Parcelable superState, @NonNull CustomBottomSheetBehavior<?> behavior) {
             super(superState);
             this.state = behavior.state;
             this.peekHeight = behavior.peekHeight;
@@ -1764,14 +1764,6 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
             this.skipCollapsed = behavior.skipCollapsed;
         }
 
-        /**
-         * This constructor does not respect flags: {@link BottomSheetBehavior#SAVE_PEEK_HEIGHT}, {@link
-         * BottomSheetBehavior#SAVE_FIT_TO_CONTENTS}, {@link BottomSheetBehavior#SAVE_HIDEABLE}, {@link
-         * BottomSheetBehavior#SAVE_SKIP_COLLAPSED}. It is as if {@link BottomSheetBehavior#SAVE_NONE}
-         * were set.
-         *
-         * @deprecated Use {@link #SavedState(Parcelable, BottomSheetBehavior)} instead.
-         */
         @Deprecated
         public SavedState(Parcelable superstate, int state) {
             super(superstate);
@@ -1810,25 +1802,19 @@ public class BottomSheetBehavior<V extends View> extends CoordinatorLayout.Behav
                 };
     }
 
-    /**
-     * A utility function to get the {@link BottomSheetBehavior} associated with the {@code view}.
-     *
-     * @param view The {@link View} with {@link BottomSheetBehavior}.
-     * @return The {@link BottomSheetBehavior} associated with the {@code view}.
-     */
     @NonNull
     @SuppressWarnings("unchecked")
-    public static <V extends View> BottomSheetBehavior<V> from(@NonNull V view) {
+    public static <V extends View> CustomBottomSheetBehavior<V> from(@NonNull V view) {
         ViewGroup.LayoutParams params = view.getLayoutParams();
         if (!(params instanceof CoordinatorLayout.LayoutParams)) {
             throw new IllegalArgumentException("The view is not a child of CoordinatorLayout");
         }
         CoordinatorLayout.Behavior<?> behavior =
                 ((CoordinatorLayout.LayoutParams) params).getBehavior();
-        if (!(behavior instanceof BottomSheetBehavior)) {
+        if (!(behavior instanceof CustomBottomSheetBehavior)) {
             throw new IllegalArgumentException("The view is not associated with BottomSheetBehavior");
         }
-        return (BottomSheetBehavior<V>) behavior;
+        return (CustomBottomSheetBehavior<V>) behavior;
     }
 
     /**

@@ -2,6 +2,7 @@ package com.base.vpbs
 
 import android.os.Bundle
 import android.view.View
+import com.base.vpbs.base.BaseSheetDialogFragment
 import com.base.vpbs.base.BaseViewPagerSheetDialogFragment
 import com.base.vpbs.base.EmptyViewModel
 import com.base.vpbs.base.ScreenUtil
@@ -16,7 +17,7 @@ import com.google.android.material.tabs.TabLayout
  * @date 2022/5/2
  */
 class ContentSheetFragment :
-    BaseViewPagerSheetDialogFragment<FragmentContentBinding, EmptyViewModel>(),
+    BaseSheetDialogFragment<FragmentContentBinding, EmptyViewModel>(),
     CallBackScrollChild {
 
 

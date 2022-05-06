@@ -16,9 +16,11 @@ package com.base.vpbs.base;
  */
 
 import com.base.vpbs.R;
-import com.base.vpbs.base.BottomSheetBehavior.BottomSheetCallback;
+import com.base.vpbs.base.CustomBottomSheetBehavior.BottomSheetCallback;
+
 import static android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
 import static com.google.android.material.color.MaterialColors.isColorLight;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -61,7 +63,7 @@ import com.google.android.material.shape.MaterialShapeDrawable;
  */
 public class CustomBottomSheetDialog extends AppCompatDialog {
 
-    private BottomSheetBehavior<FrameLayout> behavior;
+    private CustomBottomSheetBehavior<FrameLayout> behavior;
 
     private FrameLayout container;
     private CoordinatorLayout coordinator;
@@ -149,8 +151,8 @@ public class CustomBottomSheetDialog extends AppCompatDialog {
     @Override
     protected void onStart() {
         super.onStart();
-        if (behavior != null && behavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
-            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        if (behavior != null && behavior.getState() == CustomBottomSheetBehavior.STATE_HIDDEN) {
+            behavior.setState(CustomBottomSheetBehavior.STATE_COLLAPSED);
         }
     }
 
@@ -184,20 +186,15 @@ public class CustomBottomSheetDialog extends AppCompatDialog {
      * or calling `dismiss()` from a `BottomSheetDialogFragment`, tapping outside a dialog, etc...
      * <p>If this function is called from a swipe down interaction, or dismissWithAnimation is false,
      * then keep the default behavior.
-     *
-     * <p>Else, since this is a terminal event which will finish this dialog, we override the attached
-     * {@link BottomSheetBehavior.BottomSheetCallback} to call this function, after {@link
-     * BottomSheetBehavior#STATE_HIDDEN} is set. This will enforce the swipe down animation before
-     * canceling this dialog.
      */
     @Override
     public void cancel() {
-        BottomSheetBehavior<FrameLayout> behavior = getBehavior();
+        CustomBottomSheetBehavior<FrameLayout> behavior = getBehavior();
 
-        if (!dismissWithAnimation || behavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
+        if (!dismissWithAnimation || behavior.getState() == CustomBottomSheetBehavior.STATE_HIDDEN) {
             super.cancel();
         } else {
-            behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            behavior.setState(CustomBottomSheetBehavior.STATE_HIDDEN);
         }
     }
 
@@ -212,7 +209,7 @@ public class CustomBottomSheetDialog extends AppCompatDialog {
     }
 
     @NonNull
-    public BottomSheetBehavior<FrameLayout> getBehavior() {
+    public CustomBottomSheetBehavior<FrameLayout> getBehavior() {
         if (behavior == null) {
             // The content hasn't been set, so the behavior doesn't exist yet. Let's create it.
             ensureContainerAndBehavior();
@@ -251,12 +248,12 @@ public class CustomBottomSheetDialog extends AppCompatDialog {
     private FrameLayout ensureContainerAndBehavior() {
         if (container == null) {
             container =
-                    (FrameLayout) View.inflate(getContext(), R.layout.design_custom_bottom_sheet_dialog , null);
+                    (FrameLayout) View.inflate(getContext(), R.layout.design_custom_bottom_sheet_dialog, null);
 
             coordinator = (CoordinatorLayout) container.findViewById(R.id.coordinator);
             bottomSheet = (FrameLayout) container.findViewById(R.id.design_bottom_sheet);
 
-            behavior = BottomSheetBehavior.from(bottomSheet);
+            behavior = CustomBottomSheetBehavior.from(bottomSheet);
             behavior.addBottomSheetCallback(bottomSheetCallback);
             behavior.setHideable(cancelable);
         }
@@ -375,12 +372,12 @@ public class CustomBottomSheetDialog extends AppCompatDialog {
     }
 
     @NonNull
-    private BottomSheetBehavior.BottomSheetCallback bottomSheetCallback =
-            new BottomSheetBehavior.BottomSheetCallback() {
+    private CustomBottomSheetBehavior.BottomSheetCallback bottomSheetCallback =
+            new CustomBottomSheetBehavior.BottomSheetCallback() {
                 @Override
                 public void onStateChanged(
-                        @NonNull View bottomSheet, @BottomSheetBehavior.State int newState) {
-                    if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                        @NonNull View bottomSheet, @CustomBottomSheetBehavior.State int newState) {
+                    if (newState == CustomBottomSheetBehavior.STATE_HIDDEN) {
                         cancel();
                     }
                 }
@@ -390,7 +387,7 @@ public class CustomBottomSheetDialog extends AppCompatDialog {
                 }
             };
 
-    private static class EdgeToEdgeCallback extends BottomSheetBehavior.BottomSheetCallback {
+    private static class EdgeToEdgeCallback extends CustomBottomSheetBehavior.BottomSheetCallback {
 
         private final boolean lightBottomSheet;
         private final boolean lightStatusBar;
@@ -406,7 +403,7 @@ public class CustomBottomSheetDialog extends AppCompatDialog {
             // Try to find the background color to automatically change the status bar icons so they will
             // still be visible when the bottomsheet slides underneath the status bar.
             ColorStateList backgroundTint;
-            MaterialShapeDrawable msd = BottomSheetBehavior.from(bottomSheet).getMaterialShapeDrawable();
+            MaterialShapeDrawable msd = CustomBottomSheetBehavior.from(bottomSheet).getMaterialShapeDrawable();
             if (msd != null) {
                 backgroundTint = msd.getFillColor();
             } else {

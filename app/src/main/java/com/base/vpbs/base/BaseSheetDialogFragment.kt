@@ -22,12 +22,12 @@ abstract class BaseSheetDialogFragment<V : ViewBinding, VM : AndroidViewModel> :
     var binding: V? = null
 
 
-    private var mBottomSheetBehavior: (BottomSheetBehavior<*>.() -> Unit)? = null
+    private var mBottomSheetBehavior: (CustomBottomSheetBehavior<*>.() -> Unit)? = null
 
-    var behavior: BottomSheetBehavior<*>? = null
+    var behavior: CustomBottomSheetBehavior<*>? = null
     private var mDialogCreate: (CustomBottomSheetDialog.() -> Unit)? = null
 
-    fun bottomSheetBehavior(behavior: (BottomSheetBehavior<*>.() -> Unit)): BaseSheetDialogFragment<V, VM> {
+    fun bottomSheetBehavior(behavior: (CustomBottomSheetBehavior<*>.() -> Unit)): BaseSheetDialogFragment<V, VM> {
         mBottomSheetBehavior = behavior
         return this
     }
@@ -93,7 +93,7 @@ abstract class BaseSheetDialogFragment<V : ViewBinding, VM : AndroidViewModel> :
 
     override fun onStart() {
         super.onStart()
-        (((view?.parent as View?)?.layoutParams as CoordinatorLayout.LayoutParams).behavior as BottomSheetBehavior<View>?)?.let {
+        (((view?.parent as View?)?.layoutParams as CoordinatorLayout.LayoutParams).behavior as CustomBottomSheetBehavior<View>?)?.let {
             mBottomSheetBehavior?.invoke(it)
             behavior = it
         }
