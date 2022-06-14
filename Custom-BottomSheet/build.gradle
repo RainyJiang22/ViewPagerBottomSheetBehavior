@@ -6,7 +6,7 @@ plugins {
 
 
 group = 'com.github.RainyJiang22'
-version = '1.0.0'
+version = '1.0.1'
 
 android {
     compileSdk 31
@@ -56,7 +56,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.RainyJiang22'
                 artifactId = 'CustomBottomSheet'
-                version = '1.0.0'
+                version = '1.0.1'
             }
         }
     }
