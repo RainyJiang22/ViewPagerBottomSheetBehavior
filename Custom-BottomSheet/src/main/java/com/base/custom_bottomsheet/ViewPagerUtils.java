@@ -1,4 +1,4 @@
-package com.base.vpbs.base;
+package com.base.custom_bottomsheet;
 
 import android.view.View;
 

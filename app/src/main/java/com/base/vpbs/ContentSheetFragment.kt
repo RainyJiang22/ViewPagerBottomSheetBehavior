@@ -2,7 +2,8 @@ package com.base.vpbs
 
 import android.os.Bundle
 import android.view.View
-import com.base.vpbs.base.BaseSheetDialogFragment
+import com.base.custom_bottomsheet.BaseSheetDialogFragment
+import com.base.custom_bottomsheet.CallBackScrollChild
 import com.base.vpbs.base.EmptyViewModel
 import com.base.vpbs.base.ScreenUtil
 import com.base.vpbs.databinding.FragmentContentBinding

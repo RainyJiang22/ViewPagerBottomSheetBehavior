@@ -3,7 +3,7 @@ package com.base.vpbs.fragment
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.base.vpbs.CallBackScrollChild
+import com.base.custom_bottomsheet.CallBackScrollChild
 import com.base.vpbs.NumberAdapter
 import com.base.vpbs.base.BaseFragment
 import com.base.vpbs.base.EmptyViewModel

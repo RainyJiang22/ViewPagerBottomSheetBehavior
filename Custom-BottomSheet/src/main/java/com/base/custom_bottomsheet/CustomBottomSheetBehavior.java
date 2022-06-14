@@ -58,6 +58,7 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.Accessibilit
 import androidx.core.view.accessibility.AccessibilityViewCommand;
 import androidx.customview.view.AbsSavedState;
 import androidx.customview.widget.ViewDragHelper;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.R;
 import com.google.android.material.internal.ViewUtils;
@@ -1345,7 +1346,18 @@ public class CustomBottomSheetBehavior<V extends View> extends CoordinatorLayout
         if (ViewCompat.isNestedScrollingEnabled(view)) {
             return view;
         }
-        if (view instanceof ViewGroup) {
+        if (view instanceof ViewPager) {
+            ViewPager viewPager = (ViewPager) view;
+            View currentViewPagerChild = ViewPagerUtils.getCurrentView(viewPager);
+            if (currentViewPagerChild == null) {
+                return null;
+            }
+
+            View scrollingChild = findScrollingChild(currentViewPagerChild);
+            if (scrollingChild != null) {
+                return scrollingChild;
+            }
+        } else if (view instanceof ViewGroup) {
             ViewGroup group = (ViewGroup) view;
             for (int i = 0, count = group.getChildCount(); i < count; i++) {
                 View scrollingChild = findScrollingChild(group.getChildAt(i));

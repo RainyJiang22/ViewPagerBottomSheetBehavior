@@ -4,6 +4,10 @@ plugins {
     id 'maven-publish'
 }
 
+
+group = 'com.github.RainyJiang22'
+version = '1.0.0'
+
 android {
     compileSdk 31
 
