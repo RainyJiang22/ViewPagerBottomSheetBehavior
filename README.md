@@ -19,7 +19,7 @@ allprojects {
 
 ```groovy
 dependencies {
-    implementation 'com.github.RainyJiang22:ViewPagerBottomSheetBehavior:v1.0.1'
+    implementation 'com.github.RainyJiang22:ViewPagerBottomSheetBehavior:1.0.1'
 }
 ```
 
